@@ -25,4 +25,11 @@ class StoreRequest extends FormRequest
             'title' => 'required|string',
         ];
     }
+    public function messages()
+    {
+        return [
+            'title.required'=>'The title field must be filled in.',
+            'title.string'=>'The title must be a string.',
+        ];
+    }
 }

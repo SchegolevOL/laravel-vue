@@ -3,19 +3,22 @@ import MainLayout from "@/Layouts/MainLayout.vue";
 import {Link} from "@inertiajs/vue3"
 
 export default {
-    name: "Create",
+    name: "Edit",
     layout: MainLayout,
+    props:[
+        'section'
+    ],
     components: {
         Link,
     },
     methods: {
         store() {
-            this.$inertia.post('/sections', {title: this.title})
+            this.$inertia.put(`/sections/${this.section.id}`, {title: this.title})
         }
     },
     data() {
         return {
-            title: '',
+            title: this.section.title,
         }
     }
 }
@@ -24,7 +27,7 @@ export default {
 <template>
     <div class="container">
         <h3 class="text-xl mr-4">
-            Add Section
+            Update Section
         </h3>
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Section title</label>
@@ -33,7 +36,7 @@ export default {
         <div v-if="this.$page.props.errors.title" class="text-danger">
             {{this.$page.props.errors.title}}
         </div>
-        <a @click.prevent="store" class="btn btn-primary">Add</a>
+        <a @click.prevent="store" class="btn btn-primary">Update</a>
     </div>
 </template>
 

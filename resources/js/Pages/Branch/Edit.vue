@@ -3,9 +3,10 @@ import MainLayout from "@/Layouts/MainLayout.vue";
 import {Link} from "@inertiajs/vue3"
 
 export default {
-    name: "Create",
+    name: "Edit",
     props: [
         'sections',
+        'branch'
     ],
     data(){
         return{
@@ -43,7 +44,7 @@ export default {
 
     <div class="container">
         <h3 class="text-xl mr-4">
-            Add Branch
+            Edit Branch
         </h3>
         <div v-if="sections.length">
             <select @change="getBranches" class="form-select" aria-label="Default select example"  v-model="section_id">
@@ -72,7 +73,7 @@ export default {
                 {{this.$page.props.errors.title}}
             </div>
         </div>
-        <a @click.prevent="store" class="btn btn-primary">Add</a>
+        <a @click.prevent="store" class="btn btn-primary">Update</a>
     </div>
 
 </template>

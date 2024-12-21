@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Section\StoreRequest;
+use App\Http\Requests\Section\UpdateRequest;
+use App\Http\Resources\Branch\BranchResource;
+use App\Http\Resources\Section\SectionResource;
+use App\Http\Resources\Section\SectionWithBranchesResource;
 use App\Models\Section;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -14,8 +18,9 @@ class SectionController extends Controller
      */
     public function index()
     {
-
-        return Inertia('Section/Index');
+        $sections = Section::with('branches')->get();
+        $sections = SectionWithBranchesResource::collection($sections)->resolve();
+        return Inertia('Section/Index', compact('sections'));
     }
 
     /**
@@ -51,15 +56,20 @@ class SectionController extends Controller
      */
     public function edit(Section $section)
     {
-        //
+
+        $section = SectionResource::make($section)->resolve();
+        return Inertia::render('Section/Edit', compact('section'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Section $section)
+    public function update(UpdateRequest $request, Section $section)
     {
-        //
+
+        $data = $request->validated();
+        $section->update($data);
+        return redirect()->route('sections.index')->with('success', 'Section updated successfully');
     }
 
     /**
@@ -67,6 +77,12 @@ class SectionController extends Controller
      */
     public function destroy(Section $section)
     {
-        //
+        $section->delete();
+        return redirect()->back()->with('success', 'Section deleted successfully');
     }
+    public function branches(Section $section)
+    {
+        return BranchResource::collection($section->branches)->resolve();
+    }
+
 }
