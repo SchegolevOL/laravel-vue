@@ -52,7 +52,7 @@ export default {
                         </Link>
 
                     </div>
-                    <div v-for="branch in section.branches" class="flex items-center">
+                    <div v-for="branch in section.branches" class="flex items-center pl-4 border text-cyan-700">
                         <Link  :href="route('branches.show', branch.id)" class=" w-80"><h4>{{branch.title}}</h4></Link>
                         <Link :href="route('branches.edit', branch.id)">
                             <div>

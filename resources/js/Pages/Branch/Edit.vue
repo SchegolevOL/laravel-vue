@@ -10,8 +10,8 @@ export default {
     ],
     data(){
         return{
-            title:'',
-            section_id:null,
+            title:this.branch.title,
+            section_id:this.branch.section_id,
             branches: [],
             parent_id:null,
         }
@@ -20,17 +20,23 @@ export default {
     components: {
         Link,
     },
+    mounted() {
+        this.getBranches()
+        this.parent_id=this.branch.parent_id
+        console.log(this.sections)
+        console.log(this.branch)
+    },
     methods: {
-        store() {
+        update() {
             console.log(this.parent_id)
-            this.$inertia.post('/branches', {
+            this.$inertia.patch(`/branches/${this.branch.id}`, {
                 section_id: this.section_id,
                 parent_id: this.parent_id,
                 title: this.title})
         },
         getBranches(){
             this.parent_id=null
-            axios.get(`/sections/${this.section_id}/branches`).then(res=>{
+            axios.get(`/sections/${this.section_id}/branches_except/${this.branch.id}`).then(res=>{
                 console.log(res)
                 this.branches=res.data
             })
@@ -73,7 +79,7 @@ export default {
                 {{this.$page.props.errors.title}}
             </div>
         </div>
-        <a @click.prevent="store" class="btn btn-primary">Update</a>
+        <a @click.prevent="update" class="btn btn-primary">Update</a>
     </div>
 
 </template>

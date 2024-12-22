@@ -22,6 +22,7 @@ class ProfileUpdateRequest extends FormRequest
                 'string',
                 'lowercase',
                 'email',
+                'avatar',
                 'max:255',
                 Rule::unique(User::class)->ignore($this->user()->id),
             ],

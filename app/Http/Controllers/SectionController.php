@@ -7,6 +7,7 @@ use App\Http\Requests\Section\UpdateRequest;
 use App\Http\Resources\Branch\BranchResource;
 use App\Http\Resources\Section\SectionResource;
 use App\Http\Resources\Section\SectionWithBranchesResource;
+use App\Models\Branch;
 use App\Models\Section;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -83,6 +84,11 @@ class SectionController extends Controller
     public function branches(Section $section)
     {
         return BranchResource::collection($section->branches)->resolve();
+    }
+public function branch_except(Section $section, Branch $branch)
+    {
+        $branches = $section->branches()->where('id','!=',$branch->id)->get();
+        return BranchResource::collection($branches)->resolve();
     }
 
 }

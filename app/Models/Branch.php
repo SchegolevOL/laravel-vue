@@ -14,4 +14,10 @@ class Branch extends Model
         'section_id',
         'parent_id',
     ];
+    public function children(){
+        return $this->hasMany(Branch::class,'parent_id', 'id');
+    }
+    public function parent(){
+        return $this->belongsTo(Branch::class,'parent_id', 'id');
+    }
 }
