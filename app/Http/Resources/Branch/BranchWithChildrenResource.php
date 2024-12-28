@@ -2,12 +2,14 @@
 
 namespace App\Http\Resources\Branch;
 
+use App\Http\Resources\Theme\ThemeResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
  * @property mixed $children
  * @property mixed $section_id
+ * @property mixed $themes
  */
 class BranchWithChildrenResource extends JsonResource
 {
@@ -24,6 +26,7 @@ class BranchWithChildrenResource extends JsonResource
             'section_id'=>$this->section_id,
             'parent_id'=>$this->parent_id,
             'children'=>BranchResource::collection($this->children)->resolve(),
+            'themes'=>ThemeResource::collection($this->themes)->resolve(),
         ];
     }
 }

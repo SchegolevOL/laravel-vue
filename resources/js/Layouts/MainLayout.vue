@@ -2,6 +2,7 @@
 import {Link} from "@inertiajs/vue3"
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+
 export default {
   name: "MainLayout",
   components: {

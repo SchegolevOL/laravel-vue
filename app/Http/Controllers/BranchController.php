@@ -51,6 +51,7 @@ class BranchController extends Controller
     public function show(Branch $branch)
     {
         $branch = BranchWithChildrenResource::make($branch)->resolve();
+
         return inertia('Branch/Show', compact('branch'));
     }
 
